@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <img id="img_valentine" src="resources/start.gif" alt="Valentine GIF" />
+    <h1 id="valentine_text">Will you be my valentine? :)</h1>
+    <div>
+      <button id="yes_button">Yes</button>
+      <button id="no_button">No</button>
+    </div>
+
+    <audio id="background_music" autoplay loop>
+      <source src="resources/daylight.mp3" type="audio/mpeg" />
+      Your browser does not support the audio element.
+    </audio>
+
+    <style>
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        height: 100vh;
+        background-color: #f0f0f0;
+        background-image: url("resources/background.jpg"); /* Add your background image URL here */
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+      }
+
+      h1 {
+        font-size: 3rem;
+        text-shadow: 2px 2px 4px #ff3da8;
+        text-align: center;
+      }
+
+      h1,
+      button {
+        font-family: "Comic Sans MS", cursive, sans-serif;
+        color: #ff0000;
+      }
+
+      button {
+        font-size: 5vw;
+      }
+
+      #yes_button {
+        padding: 0.5rem 1rem;
+        margin: 1rem;
+        border: 2px solid #00ff00;
+        border-radius: 5px;
+        background-color: #ccffcc;
+        cursor: pointer;
+        color: #039203;
+      }
+
+      #no_button {
+        padding: 0.5rem 1rem;
+        margin: 1rem;
+        border: 2px solid #ff0000;
+        border-radius: 5px;
+        background-color: #ffcccc;
+        cursor: pointer;
+        color: #ff0000;
+      }
+
+      img {
+        max-height: 50vh; /* Adjust as needed */
+        width: auto;
+        object-fit: cover;
+        object-position: center;
+      }
+    </style>
+
+    <script>
+      let noClickCount = 0;
+      const noButton = document.getElementById("no_button");
+      const yesButton = document.getElementById("yes_button");
+      const valentineImage = document.getElementById("img_valentine");
+      const valentineText = document.getElementById("valentine_text");
+
+      const noButtonTexts = [
+        "C'mon, say yes :(",
+        "Please, say yes ;(",
+        "Pleaseeeeeee",
+        ":((((((((",
+        "Last chance",
+        "It is already too late",
+      ];
+
+      noButton.addEventListener("click", () => {
+        noClickCount++;
+        noButton.textContent =
+          noButtonTexts[noClickCount - 1] || `No (${noClickCount})`;
+
+        if (noClickCount === 3) {
+          valentineImage.src = "resources/between.gif";
+        }
+        if (noClickCount === 6) {
+          valentineImage.src = "resources/final.gif";
+        }
+        if (noClickCount === 7) {
+          noButton.style.display = "none";
+        }
+        yesButton.style.transform = `scale(${1 + noClickCount * 0.1})`;
+      });
+
+      yesButton.addEventListener("click", () => {
+        valentineImage.src = "resources/yes.jpeg";
+        valentineText.textContent = "I love you bebeeeeeee! <3";
+        valentineText.style.fontSize = "3rem"; // Increase font size
+        yesButton.style.display = "none";
+        noButton.style.display = "none";
+      });
+    </script>
+  </body>
+</html>
