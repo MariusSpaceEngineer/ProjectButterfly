@@ -13,7 +13,7 @@
       <button id="no_button">No</button>
     </div>
 
-    <audio id="background_music" autoplay loop>
+    <audio id="background_music">
       <source src="resources/daylight.mp3" type="audio/mpeg" />
       Your browser does not support the audio element.
     </audio>
@@ -33,7 +33,7 @@
       }
 
       h1 {
-        font-size: 3rem;
+        font-size: 5rem;
         text-shadow: 2px 2px 4px #ff3da8;
         text-align: center;
       }
@@ -45,7 +45,16 @@
       }
 
       button {
-        font-size: 5vw;
+        font-size: 3rem;
+      }
+
+      @media (max-width: 600px) {
+        h1 {
+          font-size: 3rem;
+        }
+        button {
+          font-size: 1rem;
+        }
       }
 
       #yes_button {
@@ -82,6 +91,7 @@
       const yesButton = document.getElementById("yes_button");
       const valentineImage = document.getElementById("img_valentine");
       const valentineText = document.getElementById("valentine_text");
+      const backgroundMusic = document.getElementById("background_music");
 
       const noButtonTexts = [
         "C'mon, say yes :(",
@@ -92,8 +102,18 @@
         "It is already too late",
       ];
 
+      function playMusic() {
+        backgroundMusic.play().catch((error) => {
+          console.log("Autoplay was prevented:", error);
+          // Show a message or prompt the user to interact with the page
+        });
+      }
+
       noButton.addEventListener("click", () => {
         noClickCount++;
+        if (noClickCount === 1) {
+          playMusic();
+        }
         noButton.textContent =
           noButtonTexts[noClickCount - 1] || `No (${noClickCount})`;
 
@@ -110,6 +130,7 @@
       });
 
       yesButton.addEventListener("click", () => {
+        playMusic();
         valentineImage.src = "resources/yes.jpeg";
         valentineText.textContent = "I love you bebeeeeeee! <3";
         valentineText.style.fontSize = "3rem"; // Increase font size
